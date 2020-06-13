@@ -17,9 +17,9 @@ body, body.light {
   --red-light: #ff4569;
   --red-fr: #FFF;
 
-  --green: #00e676;
-  --green-dark: #00a152;
-  --green-light: #33eb91;
+  --green: #4caf50;
+  --green-dark: #357a38;
+  --green-light: #6fbf73;
   --green-fr: #FFF;
 
   --text-blur: #777;
@@ -126,12 +126,19 @@ button:active, a.button:active {
   background-color: var(--scolor-dark);
 }
 
-button.red {
+button.red, a.button.red {
   background-color: var(--red);
   color: var(--red-fr);
 }
-button.red:active {
+button.red:active, a.button.red:active {
   background-color: var(--red-dark);
+}
+button.green, a.button.green {
+  background-color: var(--green);
+  color: var(--green-fr);
+}
+button.green:active, a.button.green:active {
+  background-color: var(--green-dark);
 }
 
 button:disabled {
@@ -251,7 +258,7 @@ main .qr-container .image {
 main .qr-container .image figure img {
   transition: width 0.2s ease, height 0.2s ease;
 }
-main .qr-container .image.expand {
+main .qr-container .image figure .qr-wrapper.expand {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -263,12 +270,9 @@ main .qr-container .image.expand {
   right: 0;
   background-color: rgba(255, 255, 255, 0.9);
 }
-main .qr-container .image.expand figure img {
+main .qr-container .image figure .qr-wrapper.expand img {
   width: 20em;
   height: 20em;
-}
-main .qr-container .image.expand figure figcaption p {
-  display: none;
 }
 
 main .qr-container .message .icon {

@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="./style.css" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="shortcut icon" href="./assets/logo/96x96.png" type="image/x-icon" />
   <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
   <title>QR Generator</title>
 </head>
@@ -25,24 +27,28 @@
             required />
         </p>
         <p>
-          <button type="submit">Generate</button>
+          <button type="submit" :disabled="qrsource">Generate</button>
           <button @click="clearInputs" :disabled="!qrsource" type="button" class="red">Clear</button>
         </p>
       </form>
     </header>
     <main>
       <div class="qr-container">
-        <div v-if="qrsource" @click="qrExpand = !qrExpand" :class="{ image: true, 'expand': qrExpand }">
+        <div v-if="qrsource" class="image">
           <figure>
-            <img :src="qrsource" alt="QR Code" id="qr-canvas" />
-            <figcaption><p>{{ qrStaticValue }}</p></figcaption>
-            
-            <a :href="qrsource" class="button block" download="">
+            <div class="qr-wrapper" @click="qrExpand = !qrExpand" :class="{ 'expand': qrExpand }">
+              <img :src="qrsource" alt="QR Code" id="qr-canvas" />
+            </div>
+            <br />
+            <a :href="qrsource" class="button block green" id="download-btn" :download="downloadFileName">
               <span class="ic">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" 
                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
               </span>
-              <span class="label">Download</span>
+              <span class="label">
+                Download
+                <span class="file-size">({{ fileSize }} Bytes)</span>
+              </span>
             </a>
             
           </figure>

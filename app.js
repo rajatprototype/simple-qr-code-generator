@@ -1,6 +1,6 @@
-var blob = null;
+const DEFAULT_IMAGE_SIZE = 350;
 
-const app = new Vue({
+new Vue({
   el: "#app",
 
   data() {
@@ -9,6 +9,7 @@ const app = new Vue({
       qrStaticValue: '',
       qrsource: null,
       qrExpand: false,
+      fileSize: 0,
       loadingState: false
     }
   },
@@ -26,13 +27,27 @@ const app = new Vue({
       await this.generateQRCode()
     },
     async generateQRCode() {
+      if (!navigator.onLine) {
+        alert("You're offline");
+        return
+      }
+
       if (this.qrvalue.length === 0) {
         alert("Require input value");
         return null;
-      } 
+      }
+
+      // Prevent regeneration by onChange event
+      if (this.loadingState) {
+        return
+      }
+
       this.loadingState = true;
 
       const blob = await this.getBlobObject();
+
+      this.fileSize = blob.size;
+  
       const imageurl = this.getImageUrl(blob);
 
       this.loadingState = false;
@@ -89,14 +104,31 @@ const app = new Vue({
      * @param {number} size - Image size
      * @returns {string}
      */
-    buildUrl(data = 'Example', size = 350) {
+    buildUrl(data = 'Example', size = DEFAULT_IMAGE_SIZE) {
       return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${data}`;
     }
   },
 
   computed: {
+    /**
+     * @returns {string}
+     */
     lastAccessQRValue() {
       return localStorage.getItem('LAST_ACCESS_QR');
+    },
+
+    /**
+     * Generate regular file name
+     * @returns {string}
+     */
+    downloadFileName() {
+      return this.qrvalue.toLowerCase().concat(`.png`)
     }
   }
 });
+
+window.onload = function() {
+  if ('serviceWorker' in navigator) {
+    return navigator.serviceWorker.register('./sw.js')
+  }
+}
