@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./style.css" />
+  <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+  <title>QR Generator</title>
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>QR Generator</h1>
+      <br>
+      <form @submit.prevent="generateQRCode" name="data-factory" align="center">
+        <p>
+          <input 
+            v-model="qrvalue" 
+            @change="reGenerateQRCode"
+            type="text" 
+            name="qrdata" 
+            class="controller" 
+            placeholder="Type text here" 
+            autocomplete="off"
+            required />
+        </p>
+        <p>
+          <button type="submit">Generate</button>
+          <button @click="clearInputs" :disabled="!qrsource" type="button" class="red">Clear</button>
+        </p>
+      </form>
+    </header>
+    <main>
+      <div class="qr-container">
+        <div v-if="qrsource" @click="qrExpand = !qrExpand" :class="{ image: true, 'expand': qrExpand }">
+          <figure>
+            <img :src="qrsource" alt="QR Code" id="qr-canvas" />
+            <figcaption><p>{{ qrStaticValue }}</p></figcaption>
+            
+            <a :href="qrsource" class="button block" download="">
+              <span class="ic">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" 
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              </span>
+              <span class="label">Download</span>
+            </a>
+            
+          </figure>
+        </div>
+        <div v-else-if="loadingState && !qrsource" class="loading-view">
+          <div class="loader">
+            <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+              <circle class="circle" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+            </svg>
+          </div>
+        </div>
+        <div v-else class="message">
+          <div class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+          </div>
+          <div class="text">
+            <p>Your QR code will appear here</p>
+          </div>
+        </div>
+        
+      </div>
+    </main>
+  </div>
+</body>
+<script src="./app.js"></script>
+</html>

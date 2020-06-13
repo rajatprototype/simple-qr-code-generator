@@ -1,0 +1,285 @@
+@import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
+
+/* Vars */
+body, body.light {
+  --pcolor: #ffeb3b;
+  --pcolor-dark: #b2a429;
+  --pcolor-light: #ffef62;
+  --pcolor-fr: #FFF;
+
+  --scolor: #651fff;
+  --scolor-dark: #4615b2;
+  --scolor-light: #834bff;
+  --scolor-fr: #FFF;
+
+  --red: #ff1744;
+  --red-dark: #b2102f;
+  --red-light: #ff4569;
+  --red-fr: #FFF;
+
+  --green: #00e676;
+  --green-dark: #00a152;
+  --green-light: #33eb91;
+  --green-fr: #FFF;
+
+  --text-blur: #777;
+
+  --input-color: rgb(241, 241, 241); 
+
+  --pfont: 'Questrial', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  font-family: var(--pfont);
+}
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+  justify-content: space-evenly;
+}
+h1, h2, h3 {
+  margin: 0;
+  padding: 8px;
+  font-weight: normal;
+}
+h1 {
+  font-size: 2.6em;
+}
+
+input.controller {
+  min-width: 14em;
+  padding: 8px 12px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  font-family: var(--pfont);
+  font-size: 1.2em;
+  border-radius: 10px;
+  outline: none;
+  background-color: var(--input-color);
+  -webkit-tap-highlight-color: transparent;
+}
+input.controller::selection {
+  background-color: var(--scolor);
+  color: var(--scolor-fr);
+}
+
+svg {
+  width: 22px;
+  height: 22px;
+}
+
+a {
+  display: flex;
+  width: fit-content;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-width: 8em;
+  user-select: none;
+  min-height: 1em;
+  padding: 8px;
+  border-radius: 10px;
+  color: var(--scolor);
+  text-decoration: none;
+  background-color: var(--scolor);
+  color: var(--scolor-fr);
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  will-change: background-color;
+  transition: background-color 0.15s linear;
+}
+a.button.block {
+  width: 100%;
+}
+a .ic svg {
+  width: 20px;
+  height: 20px;
+}
+a .ic, a.label {
+  padding: 0 8px;
+}
+
+button {
+  margin: 4px;
+  min-width: 7em;
+  min-height: 2em;
+  padding: 8px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  background-color: var(--scolor);
+  color: var(--scolor-fr);
+  font-family: var(--pfont);
+  font-size: 1.15em;
+  will-change: background-color;
+  transition: background-color 0.15s linear;
+  -webkit-tap-highlight-color: transparent;
+}
+button:active, a.button:active {
+  background-color: var(--scolor-dark);
+}
+
+button.red {
+  background-color: var(--red);
+  color: var(--red-fr);
+}
+button.red:active {
+  background-color: var(--red-dark);
+}
+
+button:disabled {
+  background-color: var(--input-color);
+  color: var(--text-blur);
+}
+
+header {
+  padding: 12px;
+}
+main {
+  width: 100%;
+}
+main .qr-container {
+  width: auto;
+  height: 25em;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+main .qr-container .image img {
+  width: 14.5em;
+  height: 14.5em;
+}
+main .qr-container .loading-view .loader {
+  padding: 8px;
+  margin: auto;
+}
+
+@-webkit-keyframes rotation {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
+  }
+}
+@keyframes rotation {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
+  }
+}
+main .qr-container .loading-view .loader svg {
+  width: 2.6em;
+  height: 2.6em;
+  -webkit-animation: rotation 1.35s linear infinite;
+  animation: rotation 1.35s linear infinite;
+  stroke: var(--scolor);
+}
+
+@-webkit-keyframes turn {
+  0% {
+    stroke-dashoffset: 180;
+  }
+  50% {
+    stroke-dashoffset: 45;
+    -webkit-transform: rotate(135deg);
+    transform: rotate(135deg);
+  }
+  100% {
+    stroke-dashoffset: 180;
+    -webkit-transform: rotate(450deg);
+    transform: rotate(450deg);
+  }
+}
+@keyframes turn {
+  0% {
+    stroke-dashoffset: 180;
+  }
+  50% {
+    stroke-dashoffset: 45;
+    -webkit-transform: rotate(135deg);
+    transform: rotate(135deg);
+  }
+
+  100% {
+    stroke-dashoffset: 180;
+    -webkit-transform: rotate(450deg);
+    transform: rotate(450deg);
+  }
+}
+main .qr-container .loading-view .loader svg circle {
+  stroke-dasharray: 180;
+  stroke-dashoffset: 0;
+  -webkit-transform-origin: center;
+  -ms-transform-origin: center;
+  transform-origin: center;
+  -webkit-animation: turn 1.35s ease-in-out infinite;
+  animation: turn 1.35s ease-in-out infinite;
+}
+
+main .qr-container .message {
+  padding: 1.5em;
+  border-radius: 8px;
+  border: 1px dashed #BBB;
+  color: var(--text-blur);
+}
+
+main .qr-container .image figure figcaption p {
+  margin: 0;
+  padding: 8px 0;
+  font-size: 1.3em;
+}
+
+main .qr-container .image {
+  transition: background-color 0.2s linear;
+}
+main .qr-container .image figure img {
+  transition: width 0.2s ease, height 0.2s ease;
+}
+main .qr-container .image.expand {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+main .qr-container .image.expand figure img {
+  width: 20em;
+  height: 20em;
+}
+main .qr-container .image.expand figure figcaption p {
+  display: none;
+}
+
+main .qr-container .message .icon {
+  text-align: center;
+}
+main .qr-container .message .icon svg {
+  width: 3em;
+  height: 3em;
+  fill: none;
+  stroke: var(--text-blur);
+  stroke-width: 1px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
